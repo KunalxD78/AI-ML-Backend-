@@ -5,113 +5,376 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>School Management System</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f4f9; padding: 20px; }
-        .container { max-width: 900px; margin: auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container { 
+            max-width: 1200px; 
+            margin: auto; 
+            background: white; 
+            padding: 30px; 
+            border-radius: 12px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2); 
+        }
         
+        h1, h2, h3 { color: #333; margin-bottom: 15px; }
+        input, select, button { 
+            margin-bottom: 15px; 
+            padding: 12px; 
+            width: 100%; 
+            box-sizing: border-box; 
+            border: 1px solid #ddd; 
+            border-radius: 6px; 
+            font-size: 14px;
+        }
+        input:focus, select:focus { 
+            outline: none; 
+            border-color: #667eea; 
+            box-shadow: 0 0 0 3px rgba(102,126,234,0.1);
+        }
         
-        input, select { margin-bottom: 15px; padding: 10px; width: 100%; box-sizing: border-box; border: 1px solid #ddd; border-radius: 4px; }
-        button { padding: 10px 15px; background-color: #007bff; color: white; border: none; cursor: pointer; border-radius: 4px; font-weight: bold; }
-        button:hover { background-color: #0056b3; }
+        button { 
+            padding: 12px 20px; 
+            background-color: #667eea; 
+            color: white; 
+            border: none; 
+            cursor: pointer; 
+            border-radius: 6px; 
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        button:hover { background-color: #5568d3; transform: translateY(-2px); }
+        button:disabled { background-color: #ccc; cursor: not-allowed; transform: none; }
+        
         .btn-danger { background-color: #dc3545; }
-        .btn-danger:hover { background-color: #a71d2a; }
+        .btn-danger:hover { background-color: #c82333; }
+        .btn-warning { background-color: #ffc107; color: #333; }
+        .btn-warning:hover { background-color: #e0a800; }
+        .btn-success { background-color: #28a745; }
+        .btn-success:hover { background-color: #218838; }
+        .btn-small { padding: 6px 12px; width: auto; margin: 0 5px; font-size: 12px; }
 
-       
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
-        th { background-color: #f8f9fa; }
+        table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            margin-top: 20px; 
+            background: white;
+        }
+        th, td { 
+            border: 1px solid #e0e0e0; 
+            padding: 12px; 
+            text-align: left; 
+        }
+        th { 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-weight: 600;
+        }
+        tr:hover { background-color: #f8f9fa; }
 
-       
-        .section { display: none; } /* Hidden by default */
+        .section { display: none; }
         .active-section { display: block; }
         
-        .nav-bar { margin-bottom: 20px; border-bottom: 2px solid #ddd; padding-bottom: 10px; }
-        .nav-bar button { background: none; color: #555; margin-right: 10px; }
-        .nav-bar button.active { color: #007bff; border-bottom: 3px solid #007bff; }
+        .nav-bar { 
+            margin-bottom: 25px; 
+            border-bottom: 2px solid #e0e0e0; 
+            padding-bottom: 15px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .nav-bar button { 
+            background: none; 
+            color: #555; 
+            width: auto;
+            padding: 10px 20px;
+            border-bottom: 3px solid transparent;
+        }
+        .nav-bar button:hover { color: #667eea; }
+        .nav-bar button.active { 
+            color: #667eea; 
+            border-bottom: 3px solid #667eea; 
+            font-weight: 600;
+        }
 
+        #auth-container { 
+            max-width: 450px; 
+            margin: 100px auto; 
+            text-align: center;
+        }
+        #auth-container h1 { color: white; margin-bottom: 30px; }
+        #auth-container .container { padding: 40px; }
+
+        .header-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .user-badge {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .alert {
+            padding: 12px 20px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            display: none;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            min-width: 300px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        .alert.show { display: block; }
+        .alert-success { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .alert-error { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        .alert-warning { background-color: #fff3cd; color: #856404; border: 1px solid #ffeaa7; }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        .form-grid input, .form-grid select {
+            margin-bottom: 0;
+        }
+
+        .filter-bar {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            align-items: center;
+        }
+        .filter-bar input, .filter-bar button {
+            margin-bottom: 0;
+            flex: 1;
+        }
+
+        .hidden { display: none !important; }
         
-        #auth-container { max-width: 400px; margin: 100px auto; text-align: center; }
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: #667eea;
+        }
+
+        @media (max-width: 768px) {
+            .form-grid { grid-template-columns: 1fr; }
+            .header-bar { flex-direction: column; align-items: flex-start; gap: 10px; }
+            .nav-bar { flex-direction: column; }
+            .alert { right: 10px; left: 10px; min-width: auto; }
+        }
     </style>
 </head>
 <body>
 
-    <div id="auth-container" class="container">
-        <h1>Welcome</h1>
-        <div id="login-form">
-            <h3>Login</h3>
-            <input type="text" id="login-username" placeholder="Username">
-            <input type="password" id="login-password" placeholder="Password">
-            <button onclick="login()">Login</button>
-            <p>Don't have an account? <a href="#" onclick="toggleAuth('register')">Register</a></p>
-        </div>
+    
+    <div id="alert-container"></div>
 
-        <div id="register-form" style="display:none;">
-            <h3>Register</h3>
-            <input type="text" id="reg-username" placeholder="Username">
-            <input type="password" id="reg-password" placeholder="Password">
-            <select id="reg-role">
-                <option value="Student">Student</option>
-                <option value="Teacher">Teacher</option>
-                <option value="Admin">Admin</option>
-            </select>
-            <button onclick="register()">Register</button>
-            <p>Already have an account? <a href="#" onclick="toggleAuth('login')">Login</a></p>
+    
+    <div id="auth-container">
+        <h1>School Management System</h1>
+        <div class="container">
+            <div id="login-form">
+                <h3>Login</h3>
+                <input type="text" id="login-username" placeholder="Username">
+                <input type="password" id="login-password" placeholder="Password">
+                <button onclick="login()">Login</button>
+                <p>Don't have an account? <a href="#" onclick="toggleAuth('register')">Register</a></p>
+            </div>
+
+            <div id="register-form" style="display:none;">
+                <h3>Register</h3>
+                <input type="text" id="reg-username" placeholder="Username">
+                <input type="password" id="reg-password" placeholder="Password">
+                <select id="reg-role">
+                    <option value="">-- Select Role --</option>
+                    <option value="Student">Student</option>
+                    <option value="Teacher">Teacher</option>
+                    <option value="Admin">Admin</option>
+                    <option value="Parent">Parent</option>
+                </select>
+                <button onclick="register()">Register</button>
+                <p>Already have an account? <a href="#" onclick="toggleAuth('login')">Login</a></p>
+            </div>
         </div>
     </div>
 
+    
     <div id="main-app" class="container" style="display: none;">
-        <div style="display: flex; justify-content: space-between; align-items: center;">
-            <h1>School Manager</h1>
-            <button class="btn-danger" onclick="logout()">Logout</button>
+        <div class="header-bar">
+            <h1>🎓 School Manager</h1>
+            <div class="user-info">
+                <div class="user-badge" id="user-badge"></div>
+                <button class="btn-danger btn-small" onclick="logout()">Logout</button>
+            </div>
         </div>
 
-        <div class="nav-bar">
-            <button onclick="showSection('students')" id="nav-students">Students</button>
-            <button onclick="showSection('teachers')" id="nav-teachers">Teachers</button>
-            <button onclick="showSection('attendance')" id="nav-attendance">Attendance</button>
+        <div class="nav-bar" id="nav-bar">
+            
         </div>
 
+        
         <div id="section-students" class="section">
-            <h3>Add Student</h3>
-            <input type="text" id="stu-fname" placeholder="First Name">
-            <input type="text" id="stu-lname" placeholder="Last Name">
-            <input type="email" id="stu-email" placeholder="Email">
-            <button onclick="addStudent()">Add Student</button>
+            <h3>Student Management</h3>
             
-            <h3>All Students</h3>
-            <table id="table-students">
-                <thead><tr><th>ID</th><th>First Name</th><th>Last Name</th><th>Email</th></tr></thead>
+            
+            <div id="add-student-form" class="hidden">
+                <h4>Add New Student</h4>
+                <div class="form-grid">
+                    <input type="text" id="stu-fname" placeholder="First Name">
+                    <input type="text" id="stu-lname" placeholder="Last Name">
+                </div>
+                <input type="email" id="stu-email" placeholder="Email">
+                <button onclick="addStudent()">Add Student</button>
+            </div>
+            
+            <h4>All Students</h4>
+            <div class="loading" id="students-loading">Loading...</div>
+            <table id="table-students" class="hidden">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Email</th>
+                        <th>Created At</th>
+                        <th class="admin-only">Actions</th>
+                    </tr>
+                </thead>
                 <tbody></tbody>
             </table>
         </div>
 
+        
         <div id="section-teachers" class="section">
-            <h3>Add Teacher</h3>
-            <input type="text" id="teach-fname" placeholder="First Name">
-            <input type="text" id="teach-lname" placeholder="Last Name">
-            <input type="text" id="teach-subject" placeholder="Subject">
-            <button onclick="addTeacher()">Add Teacher</button>
+            <h3>Teacher Management</h3>
             
-            <h3>All Teachers</h3>
-            <table id="table-teachers">
-                <thead><tr><th>ID</th><th>First Name</th><th>Last Name</th><th>Subject</th></tr></thead>
+            
+            <div id="add-teacher-form" class="hidden">
+                <h4>Add New Teacher</h4>
+                <div class="form-grid">
+                    <input type="text" id="teach-fname" placeholder="First Name">
+                    <input type="text" id="teach-lname" placeholder="Last Name">
+                </div>
+                <input type="text" id="teach-subject" placeholder="Subject">
+                <button onclick="addTeacher()">Add Teacher</button>
+            </div>
+            
+            <h4>All Teachers</h4>
+            <div class="loading" id="teachers-loading">Loading...</div>
+            <table id="table-teachers" class="hidden">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Subject</th>
+                        <th>Created At</th>
+                        <th class="admin-only">Actions</th>
+                    </tr>
+                </thead>
                 <tbody></tbody>
             </table>
         </div>
 
-        <div id="section-attendance" class="section">
-            <h3>Mark Attendance</h3>
-            <input type="number" id="att-stu-id" placeholder="Student ID (e.g., 1)">
-            <input type="date" id="att-date">
-            <select id="att-status">
-                <option value="Present">Present</option>
-                <option value="Absent">Absent</option>
-            </select>
-            <button onclick="markAttendance()">Submit Attendance</button>
+        
+        <div id="section-timetable" class="section">
+            <h3>Timetable Management</h3>
             
-            <h3>View Attendance</h3>
-            <button onclick="fetchAttendance()">Refresh List</button>
-            <table id="table-attendance">
-                <thead><tr><th>ID</th><th>Date</th><th>Student ID</th><th>Status</th></tr></thead>
+            
+            <div id="add-timetable-form" class="hidden">
+                <h4>Add Timetable Entry</h4>
+                <select id="tt-day">
+                    <option value="">-- Select Day --</option>
+                    <option value="Monday">Monday</option>
+                    <option value="Tuesday">Tuesday</option>
+                    <option value="Wednesday">Wednesday</option>
+                    <option value="Thursday">Thursday</option>
+                    <option value="Friday">Friday</option>
+                    <option value="Saturday">Saturday</option>
+                </select>
+                <div class="form-grid">
+                    <input type="time" id="tt-start" placeholder="Start Time">
+                    <input type="time" id="tt-end" placeholder="End Time">
+                </div>
+                <input type="text" id="tt-subject" placeholder="Subject">
+                <select id="tt-teacher">
+                    <option value="">-- Select Teacher (Optional) --</option>
+                </select>
+                <button onclick="addTimetable()">Add Timetable</button>
+            </div>
+            
+            <h4>Current Timetable</h4>
+            <div class="loading" id="timetable-loading">Loading...</div>
+            <table id="table-timetable" class="hidden">
+                <thead>
+                    <tr>
+                        <th>Day</th>
+                        <th>Time</th>
+                        <th>Subject</th>
+                        <th>Teacher</th>
+                        <th class="admin-only">Actions</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+
+        
+        <div id="section-attendance" class="section">
+            <h3>Attendance Management</h3>
+            
+            
+            <div id="mark-attendance-form" class="hidden">
+                <h4>Mark Attendance</h4>
+                <select id="att-stu-id">
+                    <option value="">-- Select Student --</option>
+                </select>
+                <input type="date" id="att-date">
+                <select id="att-status">
+                    <option value="Present">Present</option>
+                    <option value="Absent">Absent</option>
+                </select>
+                <button onclick="markAttendance()">Submit Attendance</button>
+            </div>
+            
+            <h4>Attendance Records</h4>
+            <div class="filter-bar">
+                <input type="date" id="filter-date" placeholder="Filter by date">
+                <button class="btn-warning" onclick="fetchAttendance()">Filter</button>
+                <button class="btn-success" onclick="clearDateFilter()">Clear Filter</button>
+            </div>
+            
+            <div class="loading" id="attendance-loading">Loading...</div>
+            <table id="table-attendance" class="hidden">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Date</th>
+                        <th>Student</th>
+                        <th>Status</th>
+                        <th>Marked At</th>
+                    </tr>
+                </thead>
                 <tbody></tbody>
             </table>
         </div>
@@ -120,14 +383,54 @@
     <script>
         const API_URL = 'http://127.0.0.1:5000';
         let token = localStorage.getItem('access_token');
+        let userRole = localStorage.getItem('user_role');
+        let username = localStorage.getItem('username');
 
-       
-        if (token) {
-            document.getElementById('auth-container').style.display = 'none';
-            document.getElementById('main-app').style.display = 'block';
-            showSection('students');
+        
+        if (token && userRole) {
+            showMainApp();
         }
 
+        
+        function showAlert(message, type = 'success') {
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `alert alert-${type} show`;
+            alertDiv.textContent = message;
+            
+            const container = document.getElementById('alert-container');
+            container.appendChild(alertDiv);
+            
+            setTimeout(() => {
+                alertDiv.remove();
+            }, 4000);
+        }
+
+        function getAuthHeaders() {
+            return {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            };
+        }
+
+        async function handleResponse(response) {
+            const data = await response.json();
+            
+            if (!response.ok) {
+                if (response.status === 401) {
+                    showAlert('Session expired. Please login again.', 'error');
+                    setTimeout(() => logout(), 2000);
+                } else if (response.status === 403) {
+                    showAlert('You do not have permission to perform this action.', 'error');
+                } else {
+                    showAlert(data.error || 'An error occurred', 'error');
+                }
+                throw new Error(data.error || 'Request failed');
+            }
+            
+            return data;
+        }
+
+        
         function toggleAuth(view) {
             if(view === 'register') {
                 document.getElementById('login-form').style.display = 'none';
@@ -139,149 +442,516 @@
         }
 
         async function register() {
-            const username = document.getElementById('reg-username').value;
+            const username = document.getElementById('reg-username').value.trim();
             const password = document.getElementById('reg-password').value;
             const role = document.getElementById('reg-role').value;
 
-            const res = await fetch(`${API_URL}/register`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ username, password, role })
-            });
+            if (!username || !password || !role) {
+                showAlert('Please fill all fields', 'error');
+                return;
+            }
 
-            if (res.ok) {
-                alert("Registered! Please login.");
+            try {
+                const res = await fetch(`${API_URL}/register`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password, role })
+                });
+
+                const data = await handleResponse(res);
+                showAlert('Registration successful! Please login.', 'success');
                 toggleAuth('login');
-            } else {
-                alert("Registration failed");
+            } catch (error) {
+                console.error('Registration error:', error);
             }
         }
 
         async function login() {
-            const username = document.getElementById('login-username').value;
+            const usernameInput = document.getElementById('login-username').value.trim();
             const password = document.getElementById('login-password').value;
 
-            const res = await fetch(`${API_URL}/login`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ username, password })
-            });
+            if (!usernameInput || !password) {
+                showAlert('Please enter username and password', 'error');
+                return;
+            }
 
-            const data = await res.json();
+            try {
+                const res = await fetch(`${API_URL}/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username: usernameInput, password })
+                });
 
-            if (res.ok) {
+                const data = await handleResponse(res);
+                
                 token = data.access_token;
-                localStorage.setItem('access_token', token); // Save token
-                location.reload(); // Refresh page to show dashboard
-            } else {
-                alert("Login failed: " + data.message);
+                userRole = data.role;
+                username = usernameInput;
+                
+                localStorage.setItem('access_token', token);
+                localStorage.setItem('user_role', userRole);
+                localStorage.setItem('username', username);
+                
+                showAlert(`Welcome ${username}!`, 'success');
+                showMainApp();
+            } catch (error) {
+                console.error('Login error:', error);
             }
         }
 
         function logout() {
-            localStorage.removeItem('access_token');
-            location.reload();
+            if (confirm('Are you sure you want to logout?')) {
+                localStorage.removeItem('access_token');
+                localStorage.removeItem('user_role');
+                localStorage.removeItem('username');
+                location.reload();
+            }
+        }
+
+        function showMainApp() {
+            document.getElementById('auth-container').style.display = 'none';
+            document.getElementById('main-app').style.display = 'block';
+            document.getElementById('user-badge').textContent = `${username} (${userRole})`;
+            
+            setupNavigation();
+            showSection('students');
         }
 
         
+        function setupNavigation() {
+            const navBar = document.getElementById('nav-bar');
+            const navButtons = [];
+
+            
+            navButtons.push('<button onclick="showSection(\'students\')" id="nav-students">Students</button>');
+            navButtons.push('<button onclick="showSection(\'teachers\')" id="nav-teachers">Teachers</button>');
+            navButtons.push('<button onclick="showSection(\'timetable\')" id="nav-timetable">Timetable</button>');
+            navButtons.push('<button onclick="showSection(\'attendance\')" id="nav-attendance">Attendance</button>');
+
+            navBar.innerHTML = navButtons.join('');
+
+            
+            if (userRole === 'Admin') {
+                document.querySelectorAll('.admin-only').forEach(el => el.classList.remove('hidden'));
+                document.getElementById('add-student-form').classList.remove('hidden');
+                document.getElementById('add-teacher-form').classList.remove('hidden');
+                document.getElementById('add-timetable-form').classList.remove('hidden');
+            } else {
+                document.querySelectorAll('.admin-only').forEach(el => el.classList.add('hidden'));
+            }
+
+            
+            if (userRole === 'Admin' || userRole === 'Teacher') {
+                document.getElementById('mark-attendance-form').classList.remove('hidden');
+            }
+        }
+
         function showSection(sectionId) {
-           
             document.querySelectorAll('.section').forEach(el => el.style.display = 'none');
-           
             document.getElementById(`section-${sectionId}`).style.display = 'block';
             
-           
+            document.querySelectorAll('.nav-bar button').forEach(btn => btn.classList.remove('active'));
+            const activeBtn = document.getElementById(`nav-${sectionId}`);
+            if (activeBtn) activeBtn.classList.add('active');
+            
+            
             if(sectionId === 'students') fetchStudents();
             if(sectionId === 'teachers') fetchTeachers();
-            if(sectionId === 'attendance') fetchAttendance();
+            if(sectionId === 'timetable') fetchTimetables();
+            if(sectionId === 'attendance') {
+                fetchStudentsForDropdown();
+                fetchAttendance();
+            }
         }
 
         
         async function fetchStudents() {
-            const res = await fetch(`${API_URL}/students`);
-            const data = await res.json();
-            const tbody = document.querySelector('#table-students tbody');
-            tbody.innerHTML = '';
-            data.forEach(s => {
-                tbody.innerHTML += `<tr><td>${s.id}</td><td>${s.firstName}</td><td>${s.lastName}</td><td>${s.email}</td></tr>`;
-            });
+            const loading = document.getElementById('students-loading');
+            const table = document.getElementById('table-students');
+            
+            loading.style.display = 'block';
+            table.classList.add('hidden');
+
+            try {
+                const res = await fetch(`${API_URL}/students`, {
+                    headers: getAuthHeaders()
+                });
+                const data = await handleResponse(res);
+                
+                const tbody = table.querySelector('tbody');
+                tbody.innerHTML = '';
+                
+                data.forEach(s => {
+                    const actionsHtml = userRole === 'Admin' 
+                        ? `<button class="btn-danger btn-small" onclick="deleteStudent(${s.id})">Delete</button>`
+                        : '';
+                    
+                    tbody.innerHTML += `
+                        <tr>
+                            <td>${s.id}</td>
+                            <td>${s.firstName}</td>
+                            <td>${s.lastName}</td>
+                            <td>${s.email}</td>
+                            <td>${s.createdAt ? new Date(s.createdAt).toLocaleDateString() : 'N/A'}</td>
+                            <td class="admin-only">${actionsHtml}</td>
+                        </tr>`;
+                });
+                
+                loading.style.display = 'none';
+                table.classList.remove('hidden');
+            } catch (error) {
+                loading.textContent = 'Failed to load students';
+            }
         }
 
         async function addStudent() {
             const payload = {
-                firstName: document.getElementById('stu-fname').value,
-                lastName: document.getElementById('stu-lname').value,
-                email: document.getElementById('stu-email').value
+                firstName: document.getElementById('stu-fname').value.trim(),
+                lastName: document.getElementById('stu-lname').value.trim(),
+                email: document.getElementById('stu-email').value.trim()
             };
-            await fetch(`${API_URL}/student`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
-            });
-            fetchStudents(); 
+
+            if (!payload.firstName || !payload.lastName || !payload.email) {
+                showAlert('Please fill all fields', 'error');
+                return;
+            }
+
+            try {
+                const res = await fetch(`${API_URL}/student`, {
+                    method: 'POST',
+                    headers: getAuthHeaders(),
+                    body: JSON.stringify(payload)
+                });
+                
+                await handleResponse(res);
+                showAlert('Student added successfully!', 'success');
+                
+                // Clear form
+                document.getElementById('stu-fname').value = '';
+                document.getElementById('stu-lname').value = '';
+                document.getElementById('stu-email').value = '';
+                
+                fetchStudents();
+            } catch (error) {
+                console.error('Add student error:', error);
+            }
+        }
+
+        async function deleteStudent(id) {
+            if (!confirm('Are you sure you want to delete this student?')) return;
+
+            try {
+                const res = await fetch(`${API_URL}/student/${id}`, {
+                    method: 'DELETE',
+                    headers: getAuthHeaders()
+                });
+                
+                await handleResponse(res);
+                showAlert('Student deleted successfully!', 'success');
+                fetchStudents();
+            } catch (error) {
+                console.error('Delete student error:', error);
+            }
         }
 
         
         async function fetchTeachers() {
-            const res = await fetch(`${API_URL}/teachers`);
-            const data = await res.json();
-            const tbody = document.querySelector('#table-teachers tbody');
-            tbody.innerHTML = '';
-            data.forEach(t => {
-                tbody.innerHTML += `<tr><td>${t.id}</td><td>${t.firstName}</td><td>${t.lastName}</td><td>${t.subject}</td></tr>`;
+            const loading = document.getElementById('teachers-loading');
+            const table = document.getElementById('table-teachers');
+            
+            loading.style.display = 'block';
+            table.classList.add('hidden');
+
+            try {
+                const res = await fetch(`${API_URL}/teachers`, {
+                    headers: getAuthHeaders()
+                });
+                const data = await handleResponse(res);
+                
+                const tbody = table.querySelector('tbody');
+                tbody.innerHTML = '';
+                
+                data.forEach(t => {
+                    const actionsHtml = userRole === 'Admin'
+                        ? `<button class="btn-danger btn-small" onclick="deleteTeacher(${t.id})">Delete</button>`
+                        : '';
+                    
+                    tbody.innerHTML += `
+                        <tr>
+                            <td>${t.id}</td>
+                            <td>${t.firstName}</td>
+                            <td>${t.lastName}</td>
+                            <td>${t.subject}</td>
+                            <td>${t.createdAt ? new Date(t.createdAt).toLocaleDateString() : 'N/A'}</td>
+                            <td class="admin-only">${actionsHtml}</td>
+                        </tr>`;
+                });
+                
+                
+                populateTeacherDropdown(data);
+                
+                loading.style.display = 'none';
+                table.classList.remove('hidden');
+            } catch (error) {
+                loading.textContent = 'Failed to load teachers';
+            }
+        }
+
+        function populateTeacherDropdown(teachers) {
+            const select = document.getElementById('tt-teacher');
+            select.innerHTML = '<option value="">-- Select Teacher (Optional) --</option>';
+            teachers.forEach(t => {
+                select.innerHTML += `<option value="${t.id}">${t.firstName} ${t.lastName} - ${t.subject}</option>`;
             });
         }
 
         async function addTeacher() {
             const payload = {
-                firstName: document.getElementById('teach-fname').value,
-                lastName: document.getElementById('teach-lname').value,
-                subject: document.getElementById('teach-subject').value
-            };
-            await fetch(`${API_URL}/teacher`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
-            });
-            fetchTeachers();
-        }
-
-        
-        async function markAttendance() {
-            const payload = {
-                student_id: document.getElementById('att-stu-id').value,
-                date: document.getElementById('att-date').value,
-                status: document.getElementById('att-status').value
+                firstName: document.getElementById('teach-fname').value.trim(),
+                lastName: document.getElementById('teach-lname').value.trim(),
+                subject: document.getElementById('teach-subject').value.trim()
             };
 
-            
-            const res = await fetch(`${API_URL}/mark-attendance`, {
-                method: 'POST',
-                headers: { 
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}` // <--- CRITICAL
-                },
-                body: JSON.stringify(payload)
-            });
+            if (!payload.firstName || !payload.lastName || !payload.subject) {
+                showAlert('Please fill all fields', 'error');
+                return;
+            }
 
-            if(res.ok) {
-                alert("Attendance Marked!");
-                fetchAttendance();
-            } else {
-                alert("Failed. Are you logged in?");
+            try {
+                const res = await fetch(`${API_URL}/teacher`, {
+                    method: 'POST',
+                    headers: getAuthHeaders(),
+                    body: JSON.stringify(payload)
+                });
+                
+                await handleResponse(res);
+                showAlert('Teacher added successfully!', 'success');
+                
+                document.getElementById('teach-fname').value = '';
+                document.getElementById('teach-lname').value = '';
+                document.getElementById('teach-subject').value = '';
+                
+                fetchTeachers();
+            } catch (error) {
+                console.error('Add teacher error:', error);
             }
         }
 
-        async function fetchAttendance() {
-            const res = await fetch(`${API_URL}/get-attendance`);
-            const data = await res.json();
-            const tbody = document.querySelector('#table-attendance tbody');
-            tbody.innerHTML = '';
-            data.forEach(a => {
-                tbody.innerHTML += `<tr><td>${a.id}</td><td>${a.date}</td><td>${a.student_id}</td><td>${a.status}</td></tr>`;
-            });
+        async function deleteTeacher(id) {
+            if (!confirm('Are you sure you want to delete this teacher?')) return;
+
+            try {
+                const res = await fetch(`${API_URL}/teacher/${id}`, {
+                    method: 'DELETE',
+                    headers: getAuthHeaders()
+                });
+                
+                await handleResponse(res);
+                showAlert('Teacher deleted successfully!', 'success');
+                fetchTeachers();
+            } catch (error) {
+                console.error('Delete teacher error:', error);
+            }
         }
 
-    </script>
-</body>
-</html>
+        
+        async function fetchTimetables() {
+            const loading = document.getElementById('timetable-loading');
+            const table = document.getElementById('table-timetable');
+            
+            loading.style.display = 'block';
+            table.classList.add('hidden');
+
+            try {
+                const res = await fetch(`${API_URL}/timetables`, {
+                    headers: getAuthHeaders()
+                });
+                const data = await handleResponse(res);
+                
+                const tbody = table.querySelector('tbody');
+                tbody.innerHTML = '';
+                
+                data.forEach(t => {
+                    const actionsHtml = userRole === 'Admin'
+                        ? `<button class="btn-danger btn-small" onclick="deleteTimetable(${t.id})">Delete</button>`
+                        : '';
+                    
+                    tbody.innerHTML += `
+                        <tr>
+                            <td>${t.dayOfWeek}</td>
+                            <td>${t.startTime} - ${t.endTime}</td>
+                            <td>${t.subject}</td>
+                            <td>${t.teacherName || 'Unassigned'}</td>
+                            <td class="admin-only">${actionsHtml}</td>
+                        </tr>`;
+                });
+                
+                loading.style.display = 'none';
+                table.classList.remove('hidden');
+            } catch (error) {
+                loading.textContent = 'Failed to load timetable';
+            }
+        }
+
+        async function addTimetable() {
+            const teacherValue = document.getElementById('tt-teacher').value;
+            const payload = {
+                dayOfWeek: document.getElementById('tt-day').value,
+                startTime: document.getElementById('tt-start').value,
+                endTime: document.getElementById('tt-end').value,
+                subject: document.getElementById('tt-subject').value.trim()
+            };
+            
+            
+            if (teacherValue) {
+                payload.teacherId = parseInt(teacherValue);
+            }
+
+            if (!payload.dayOfWeek || !payload.startTime || !payload.endTime || !payload.subject) {
+                showAlert('Please fill all required fields', 'error');
+                return;
+            }
+
+            try {
+                const res = await fetch(`${API_URL}/timetable`, {
+                    method: 'POST',
+                    headers: getAuthHeaders(),
+                    body: JSON.stringify(payload)
+                });
+                
+                await handleResponse(res);
+                showAlert('Timetable entry added successfully!', 'success');
+                
+                document.getElementById('tt-day').value = '';
+                document.getElementById('tt-start').value = '';
+                document.getElementById('tt-end').value = '';
+                document.getElementById('tt-subject').value = '';
+                document.getElementById('tt-teacher').value = '';
+                
+                fetchTimetables();
+                 } catch (error) {
+            console.error('Add timetable error:', error);
+        }
+    }
+
+    async function deleteTimetable(id) {
+        if (!confirm('Are you sure you want to delete this timetable entry?')) return;
+
+        try {
+            const res = await fetch(`${API_URL}/timetable/${id}`, {
+                method: 'DELETE',
+                headers: getAuthHeaders()
+            });
+            
+            await handleResponse(res);
+            showAlert('Timetable entry deleted successfully!', 'success');
+            fetchTimetables();
+        } catch (error) {
+            console.error('Delete timetable error:', error);
+        }
+    }
+
+    
+    async function fetchStudentsForDropdown() {
+        try {
+            const res = await fetch(`${API_URL}/students`, {
+                headers: getAuthHeaders()
+            });
+            const data = await handleResponse(res);
+            
+            const select = document.getElementById('att-stu-id');
+            select.innerHTML = '<option value="">-- Select Student --</option>';
+            data.forEach(s => {
+                select.innerHTML += `<option value="${s.id}">${s.firstName} ${s.lastName}</option>`;
+            });
+        } catch (error) {
+            console.error('Fetch students error:', error);
+        }
+    }
+
+    async function markAttendance() {
+        const payload = {
+            student_id: parseInt(document.getElementById('att-stu-id').value),
+            date: document.getElementById('att-date').value,
+            status: document.getElementById('att-status').value
+        };
+
+        if (!payload.student_id || !payload.date || !payload.status) {
+            showAlert('Please fill all fields', 'error');
+            return;
+        }
+
+        try {
+            const res = await fetch(`${API_URL}/mark-attendance`, {
+                method: 'POST',
+                headers: getAuthHeaders(),
+                body: JSON.stringify(payload)
+            });
+
+            await handleResponse(res);
+            showAlert('Attendance marked successfully!', 'success');
+            
+            document.getElementById('att-stu-id').value = '';
+            document.getElementById('att-date').value = '';
+            
+            fetchAttendance();
+        } catch (error) {
+            console.error('Mark attendance error:', error);
+        }
+    }
+
+    async function fetchAttendance() {
+        const loading = document.getElementById('attendance-loading');
+        const table = document.getElementById('table-attendance');
+        const dateFilter = document.getElementById('filter-date').value;
+        
+        loading.style.display = 'block';
+        table.classList.add('hidden');
+
+        try {
+            const url = dateFilter 
+                ? `${API_URL}/get-attendance?date=${dateFilter}`
+                : `${API_URL}/get-attendance`;
+            
+            const res = await fetch(url, {
+                headers: getAuthHeaders()
+            });
+            const data = await handleResponse(res);
+            
+            const tbody = table.querySelector('tbody');
+            tbody.innerHTML = '';
+            
+            data.forEach(a => {
+                const statusClass = a.status === 'Present' ? 'style="color: green; font-weight: bold;"' : 'style="color: red; font-weight: bold;"';
+                tbody.innerHTML += `
+                    <tr>
+                        <td>${a.id}</td>
+                        <td>${a.date}</td>
+                        <td>${a.studentName || `Student #${a.studentId}`}</td>
+                        <td ${statusClass}>${a.status}</td>
+                        <td>${a.createdAt ? new Date(a.createdAt).toLocaleString() : 'N/A'}</td>
+                    </tr>`;
+            });
+            
+            if (data.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="5" style="text-align: center;">No attendance records found</td></tr>';
+            }
+            
+            loading.style.display = 'none';
+            table.classList.remove('hidden');
+        } catch (error) {
+            loading.textContent = 'Failed to load attendance';
+        }
+    }
+
+    function clearDateFilter() {
+        document.getElementById('filter-date').value = '';
+        fetchAttendance();
+    }
+
+    
+    document.addEventListener('DOMContentLoaded', () => {
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('att-date').value = today;
+    });
+</script>
